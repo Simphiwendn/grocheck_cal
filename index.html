@@ -177,6 +177,8 @@
         const totalPrice = groceryList.reduce((total, grocery) => total + grocery.price, 0);
         document.querySelector('.js-total-price').innerText = `Total Price: R${totalPrice.toFixed(2)}`;
     }
+
+    document.querySelector('.js-more-info-link').innerHTML += '<a href="http://surl.li/jwlntk">Check More</a>';
 </script>
 
 </body>
