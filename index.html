@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <button id="checkPricesBtn">Check Prices</button>
     <title>Grocery List</title>
     <style>
     body {
@@ -90,7 +91,27 @@
         font-size: 18px;
         font-weight: bold;
         margin-top: 10px;
-    }
+        }
+        checkPricesBtn {
+    padding: 12px 20px; /* Vertical and horizontal padding */
+    border: none; /* Remove default border */
+    border-radius: 4px; /* Round corners */
+    background-color: #2196F3; /* Blue background */
+    color: white; /* White text */
+    font-size: 16px; /* Font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth background color change */
+}
+
+/* Add hover effect */
+#checkPricesBtn:hover {
+    background-color: #1976D2; /* Darker blue when hovered */
+}
+
+/* Center the button under the grocery list */
+#checkPricesBtn {
+    margin-top: 20px; /* Some space above the button */
+}
 </style>
 </head>
 <body>
