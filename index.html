@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <button id="checkPricesBtn">Check Prices</button>
     <title>Grocery List</title>
+    
+
     <style>
     body {
         margin: 0;
@@ -49,7 +52,7 @@
         border-color: #4CAF50;
         outline: none;
     }
-
+.save-button,
     .add-grocery-button,
     .delete-grocery-button,
     .js-calculate-price-button {
@@ -61,7 +64,7 @@
         color: white;
         transition: background-color 0.3s;
     }
-
+.save-button,
     .add-grocery-button {
         background-color: #4CAF50;
     }
@@ -85,14 +88,16 @@
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         width: 100%;
         max-width: 480px;
+       
     }
 
     .js-total-price {
         font-size: 18px;
         font-weight: bold;
         margin-top: 10px;
-        }
-        checkPricesBtn {
+    }
+    
+    #checkPricesBtn {
     padding: 12px 20px; /* Vertical and horizontal padding */
     border: none; /* Remove default border */
     border-radius: 4px; /* Round corners */
@@ -112,12 +117,14 @@
 #checkPricesBtn {
     margin-top: 20px; /* Some space above the button */
 }
+        
 </style>
 </head>
 <body>
 
-<h3>Grocery List</h3>
-<h3>Calculator</h3>
+
+<h3>Grocery Calculator</h3>
+
 
 <div class="js-grocery-list"></div>
 
@@ -129,6 +136,8 @@
 
 <button class="js-calculate-price-button">Calculate Total Price</button>
 <div class="js-total-price">Total Price: R0</div>
+
+
 
 <script>
     const groceryList = [
@@ -147,7 +156,7 @@
                 <div class="grocery-grid">
                     <div>${name}</div>
                     <div>R${price.toFixed(2)}</div>
-                    <button class="delete-grocery-button js-delete-grocery-button" data-index="${index}">⌫</button>
+                    <button class="delete-grocery-button js-delete-grocery-button" data-index="${index}">Cancel</button>
                 </div>
             `;
             groceryListHTML += html;
@@ -198,13 +207,11 @@
         const totalPrice = groceryList.reduce((total, grocery) => total + grocery.price, 0);
         document.querySelector('.js-total-price').innerText = `Total Price: R${totalPrice.toFixed(2)}`;
     }
-
-    document.querySelector('.js-more-info-link').innerHTML += '<a href="http://surl.li/jwlntk">Check More</a>';
-document.getElementById('checkPricesBtn').addEventListener('click', function () {
+    
+    document.getElementById('checkPricesBtn').addEventListener('click', function () {
             window.open('https://www.cataloguespecials.co.za/view/specials/shoprite-catalogue-2424243#page=9', '_blank');
         });
 </script>
-    
 
 </body>
 </html>
