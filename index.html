@@ -3,170 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <button id="checkPricesBtn">Check Prices</button>
     <title>Grocery List</title>
-    
 
     <style>
-    body {
-        margin: 0;
-        font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
-        background-color: #fafafa;
-        color: #444;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 40px;
-    }
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
+            background-color: #fafafa;
+            color: #444;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px;
+        }
 
-    h3 {
-        color: #4CAF50;
-        font-size: 28px;
-        margin-top: 20px;
-    }
+        h3 {
+            color: #4CAF50;
+            font-size: 32px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
 
-    .grocery-grid,
-    .grocery-input-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr 80px;
-        gap: 15px;
-        margin-bottom: 25px;
-        width: 100%;
-        max-width: 480px;
-        text-align: center;
-    }
+        .grocery-grid,
+        .grocery-input-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 80px;
+            gap: 15px;
+            margin-bottom: 25px;
+            width: 100%;
+            max-width: 480px;
+            text-align: center;
+        }
 
-    input[type="text"],
-    input[type="number"] {
-        padding: 12px;
-        font-size: 16px;
-        border: 2px solid #ccc;
-        border-radius: 4px;
-        width: 100%;
-        transition: border 0.3s;
-    }
+        input[type="text"],
+        input[type="number"] {
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+            transition: border 0.3s;
+        }
 
-    input[type="text"]:focus,
-    input[type="number"]:focus {
-        border-color: #4CAF50;
-        outline: none;
-    }
-.save-button,
-    .add-grocery-button,
-    .delete-grocery-button,
-    .js-calculate-price-button {
-        padding: 12px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 16px;
-        color: white;
-        transition: background-color 0.3s;
-    }
-.save-button,
-    .add-grocery-button {
-        background-color: #4CAF50;
-    }
+        input[type="text"]:focus,
+        input[type="number"]:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
 
-    .add-grocery-button:hover {
-        background-color: #45a049;
-    }
+        .js-price-input {
+            width: 70%; /* Keeping it aligned within the structure */
+        }
 
-    .delete-grocery-button {
-        background-color: #f44336;
-    }
+        .js-quantity-input {
+            width: 30%;
+        }
 
-    .delete-grocery-button:hover {
-        background-color: #d32f2f;
-    }
+        .add-grocery-button,
+        .delete-grocery-button,
+        #checkPricesBtn,
+        .js-calculate-price-button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            color: white;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
 
-    .js-grocery-list {
-        padding: 15px;
-        background-color: #fff;
-        border-radius: 5px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        width: 100%;
-        max-width: 480px;
-       
-    }
+        .add-grocery-button {
+            background-color: #4CAF50;
+            
+            
+            
+            
+        }
 
-    .js-total-price {
-        font-size: 18px;
-        font-weight: bold;
-        margin-top: 10px;
-    }
-    
-    #checkPricesBtn {
-    padding: 12px 20px; /* Vertical and horizontal padding */
-    border: none; /* Remove default border */
-    border-radius: 4px; /* Round corners */
-    background-color: #2196F3; /* Blue background */
-    color: white; /* White text */
-    font-size: 16px; /* Font size */
-    cursor: pointer; /* Pointer cursor on hover */
-    transition: background-color 0.3s; /* Smooth background color change */
-}
+        .delete-grocery-button {
+            background-color: #f44336;
+        }
 
-/* Add hover effect */
-#checkPricesBtn:hover {
-    background-color: #1976D2; /* Darker blue when hovered */
-}
+        #checkPricesBtn {
+            background-color: #2196F3;
+            margin-top: 20px;
+        }
 
-/* Center the button under the grocery list */
-#checkPricesBtn {
-    margin-top: 20px; /* Some space above the button */
-}
-        
-</style>
+        #checkPricesBtn:hover,
+        .add-grocery-button:hover,
+        .delete-grocery-button:hover,
+        .js-calculate-price-button:hover {
+            opacity: 0.8;
+        }
+
+        .js-grocery-list {
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 480px;
+            margin-bottom: 20px;
+        }
+
+        .js-total-price {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+    </style>
 </head>
 <body>
 
-
 <h3>Grocery Calculator</h3>
-
 
 <div class="js-grocery-list"></div>
 
 <div class="grocery-input-grid">
-    <input placeholder="Grocery name" class="js-name-input" type="text">
+    <input placeholder="Item" class="js-name-input" type="text">
     <input placeholder="Price" type="number" class="js-price-input">
+    <input placeholder="Quantity" type="number" class="js-quantity-input" min="1" value="1">
     <button class="add-grocery-button js-add-grocery-button">Add</button>
 </div>
 
 <button class="js-calculate-price-button">Calculate Total Price</button>
 <div class="js-total-price">Total Price: R0</div>
 
-
+<button id="checkPricesBtn">Check Prices</button>
 
 <script>
-    const groceryList = [
-        { name: '10kg Rice', price: 179 },
-        { name: '10kg Maize meal', price: 125 }
-    ];
-
-    renderGroceryList();
+    const groceryList = [];
 
     function renderGroceryList() {
         let groceryListHTML = '';
-
         groceryList.forEach((groceryObject, index) => {
-            const { name, price } = groceryObject;
-            const html = `
+            const { name, price, quantity } = groceryObject;
+            groceryListHTML += `
                 <div class="grocery-grid">
                     <div>${name}</div>
                     <div>R${price.toFixed(2)}</div>
+                    <div>${quantity}</div>
+                    <div>R${(price * quantity).toFixed(2)}</div>
                     <button class="delete-grocery-button js-delete-grocery-button" data-index="${index}">Cancel</button>
                 </div>
             `;
-            groceryListHTML += html;
         });
-
         document.querySelector('.js-grocery-list').innerHTML = groceryListHTML;
 
         // Attach delete button handlers
-        document.querySelectorAll('.js-delete-grocery-button').forEach((deleteButton) => {
-            deleteButton.addEventListener('click', (event) => {
+        document.querySelectorAll('.js-delete-grocery-button').forEach(deleteButton => {
+            deleteButton.addEventListener('click', event => {
                 const index = event.target.dataset.index;
                 groceryList.splice(index, 1);
                 renderGroceryList();
@@ -175,23 +162,22 @@
         });
     }
 
-    document.querySelector('.js-add-grocery-button').addEventListener('click', () => {
-        addGrocery();
-    });
+    document.querySelector('.js-add-grocery-button').addEventListener('click', addGrocery);
 
     function addGrocery() {
         const inputElement = document.querySelector('.js-name-input');
         const name = inputElement.value.trim();
-
         const priceInputElement = document.querySelector('.js-price-input');
         const price = parseFloat(priceInputElement.value) || 0;
+        const quantityInputElement = document.querySelector('.js-quantity-input');
+        const quantity = parseInt(quantityInputElement.value) || 1;
 
         if (name) {
-            groceryList.push({ name, price });
-            // Clear the input fields
+            groceryList.push({ name, price, quantity });
+            // Clear input fields
             inputElement.value = '';
             priceInputElement.value = '';
-
+            quantityInputElement.value = '1';
             renderGroceryList();
             calculateTotalPrice();
         } else {
@@ -199,18 +185,18 @@
         }
     }
 
-    document.querySelector('.js-calculate-price-button').addEventListener('click', () => {
-        calculateTotalPrice();
-    });
+    document.querySelector('.js-calculate-price-button').addEventListener('click', calculateTotalPrice);
 
     function calculateTotalPrice() {
-        const totalPrice = groceryList.reduce((total, grocery) => total + grocery.price, 0);
+        const totalPrice = groceryList.reduce((total, grocery) => total + (grocery.price * grocery.quantity), 0);
         document.querySelector('.js-total-price').innerText = `Total Price: R${totalPrice.toFixed(2)}`;
     }
-    
+
     document.getElementById('checkPricesBtn').addEventListener('click', function () {
-            window.open('https://www.cataloguespecials.co.za/view/specials/shoprite-catalogue-2424243#page=9', '_blank');
-        });
+        window.open('https://www.cataloguespecials.co.za/view/specials/shoprite-catalogue-2424243#page=9', '_blank');
+    });
+
+    renderGroceryList(); // Initial call to render the empty list
 </script>
 
 </body>
