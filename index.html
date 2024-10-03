@@ -132,8 +132,8 @@
 
 <button id="checkPricesBtn">Check Prices</button>
 
-<script>
-let groceryList = JSON.parse(localStorage.getItem('groceryList')) || [];
+<script> 
+ const groceryList = [];
     
     function renderGroceryList() {
         let groceryListHTML = '';
@@ -156,7 +156,6 @@ let groceryList = JSON.parse(localStorage.getItem('groceryList')) || [];
             deleteButton.addEventListener('click', event => {
                 const index = event.target.dataset.index;
                 groceryList.splice(index, 1);
-                uptadeLocalStorage();
                 renderGroceryList();
                 calculateTotalPrice();
             });
@@ -176,7 +175,6 @@ let groceryList = JSON.parse(localStorage.getItem('groceryList')) || [];
         if (name) {
             groceryList.push({ name, price, quantity });
             // Clear input fields
-            updateLocalStarage();
             inputElement.value = '';
             priceInputElement.value = '';
             quantityInputElement.value = '1';
@@ -186,10 +184,7 @@ let groceryList = JSON.parse(localStorage.getItem('groceryList')) || [];
             alert('Please enter a grocery name.');
         }
     }
-    function updateLocalStorage() {
-        localStorage.setItem('groceryList', JSON.stringify(groceryList));
-    }
-
+    
     document.querySelector('.js-calculate-price-button').addEventListener('click', calculateTotalPrice);
 
     function calculateTotalPrice() {
