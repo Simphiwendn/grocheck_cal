@@ -4,16 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grocery List</title>
+    
     <style>
-        /* Existing styles... */
-        
-        /* Link to the book initially hidden */
-        .book-link {
+    
+    book-link {
             display: none; /* Hide the link by default */
         }
-
-        /* Existing styles... */
-        
         body {
             margin: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
@@ -23,6 +19,21 @@
             flex-direction: column;
             align-items: center;
             padding: 40px;
+        }
+        
+        .help-grow-button {
+            border: none;
+            color: white;
+            border-radius: 20px;
+            background-color: #4CAF50;
+            padding: 12px 20px;
+            cursor: pointer;
+            font-size: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .help-grow-button:hover {
+            opacity: 0.8;
         }
 
         h3 {
@@ -58,16 +69,7 @@
             border-color: #4CAF50;
             outline: none;
         }
-
-        .js-price-input {
-            width: 70%; /* Keeping it aligned within the structure */
-        }
-
-        .js-quantity-input {
-            width: 30%;
-        }
-
-        .donate-button,
+ibhakede-button,
         .book-button,
         .register-button,
         .save-grocery-button,
@@ -87,7 +89,7 @@
 
         .add-grocery-button,
         .register-button {
-            background-color: #4CAF50; /* Removed the comma before this block */
+            background-color: #4CAF50;
         }
 
         .delete-grocery-button {
@@ -95,7 +97,8 @@
         }
 
         .register-button,
-        .donate-button,
+        .ibhakede-button,
+        .book-button,
         .save-grocery-button,
         #checkPricesBtn {
             background-color: #2196F3;
@@ -103,11 +106,30 @@
         }
 
         #checkPricesBtn:hover,
+        .book-button:hover,
         .add-grocery-button:hover,
         .delete-grocery-button:hover,
-        .js-calculate-price-button:hover {
+        .js-calculate-price-button:hover 
+      .help-grow-button:hover,{
             opacity: 0.8;
         }
+
+        .js-grocery-list {
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 480px;
+            margin-bottom: 20px;
+        }
+
+        .js-total-price {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        /* Other styles for buttons and other elements remain the same... */
 
         .js-grocery-list {
             padding: 15px;
@@ -127,8 +149,8 @@
     </style>
 </head>
 <body>
+<button class="help-grow-button" onclick="promptDonation()">Please Help Us Grow This Platform</button>
 
-<button class="donate-button" id="donation-button">Donate</button>
 <h3>Grocery Calculator</h3>
 
 <div class="js-grocery-list"></div>
@@ -144,15 +166,11 @@
 <div class="js-total-price">Total Price: R0.00</div>
 
 <button id="checkPricesBtn">Check Prices</button>
-
-<!-- Book link initially hidden -->
-<div class="book-link">
-    <a href="https://drive.google.com/file/d/19radpY7-TA_LVMPihAnj8ZhASEQHjH4O/view?usp=drivesdk" target="_blank">How to break poverty</a>
-</div>
+<a href="#" id="guideLink" style="display:none;">How to break poverty</a>
 
 <div id="paypal-button-container"></div>
 
-<script src="https://www.paypal.com/sdk/js?client-id=SimphiweNdaba100"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=paypal/SimphiweNdaba100"></script>
 <script>
     let groceryList = [];
 
@@ -173,6 +191,7 @@
         
         document.querySelector('.js-grocery-list').innerHTML = groceryListHTML;
 
+        // Attach delete button handlers
         document.querySelectorAll('.js-delete-grocery-button').forEach(deleteButton => {
             deleteButton.addEventListener('click', event => {
                 const index = event.target.dataset.index;
@@ -188,18 +207,17 @@
     function addGrocery() {
         const inputElement = document.querySelector('.js-name-input');
         const name = inputElement.value.trim();
-
         const priceInputElement = document.querySelector('.js-price-input');
         const price = parseFloat(priceInputElement.value) || 0;
-
         const quantityInputElement = document.querySelector('.js-quantity-input');
         const quantity = parseInt(quantityInputElement.value) || 1;
 
         if (name) {
             groceryList.push({ name, price, quantity });
+            // Clear input fields
             inputElement.value = '';
             priceInputElement.value = '';
-            quantityInputElement.value = '1';
+            quantityInputElement.value = '1'; // Reset to default value
             renderGroceryList();
             calculateTotalPrice();
         } else {
@@ -218,56 +236,48 @@
         window.open('https://www.cataloguespecials.co.za/view/specials/shoprite-catalogue-2424243#page=9', '_blank');
     });
 
-    function setCookie(name, value, days) {
-        var expires = new Date(Date.now() + days * 864e5);
-        document.cookie = name + '=' + JSON.stringify(value) + '; expires=' + expires.toGMTString() + '; path=/';
+    // Function to handle donation prompts
+    function promptDonation() {
+        const amount = prompt("Please enter the amount you'd like to donate:");
+        if (amount) {
+            const accountNumber = '1193609575'; // Example account number
+            alert('Please send your payment to: ' + accountNumber);
+        } else {
+            alert('Donation amount was not entered.');
+        }
     }
 
-    function getCookie(name) {
-        var value = '; ' + document.cookie;
-        var parts = value.split('; ' + name + '=');
-        if (parts.length == 2) return JSON.parse(parts.pop().split(';').shift());
-    }
-
-    document.querySelector('.save-grocery-button').addEventListener('click', function () {
-        setCookie('groceryList', groceryList, 7);
-    });
-
-    window.addEventListener('load', function () {
-        var savedData = getCookie('groceryList');
-        if (savedData) {
-            groceryList = savedData;
-            renderGroceryList();
-            calculateTotalPrice();
+    // PayPal donation integration
+    paypal.Buttons({
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: '.' // Donation amount - change this as necessary
+                    }
+                }]
+            });
+        },
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(details) {
+                alert('Thank you for your donation, ' + details.payer.name.given + '!');
+                // Show the alert with the account number and guide link
+                const accountNumber = '1193609575'; // Example account number
+                alert('Please send your payment to: ' + accountNumber);
+                document.getElementById('guideLink').style.display = 'block'; // Show the link after successful donation
+                document.getElementById('guideLink').href = "https://drive.google.com/file/d/19radpY7-TA_LVMPihAnj8ZhASEQHjH4O/view?usp=drivesdk";
+            });
+        },
+        onCancel: function(data) {
+            alert('Donation cancelled.');
+        },
+        onError: function(err) {
+            console.error(err);
+            alert('An error occurred during the donation process.');
         }
-    });
+    }).render('#paypal-button-container'); // Render the PayPal button into the container
 
-    renderGroceryList();
-
-    document.getElementById('donation-button').addEventListener('click', function () {
-        const donationAmount = prompt('Please enter your donation amount for the cause:');
-        if (donationAmount) {
-            paypal.Buttons({
-                createOrder: function(data, actions) {
-                    return actions.order.create({
-                        purchase_units: [{
-                            amount: {
-                                value: '10.00' 
-                            }
-                        }]
-                    });
-                },
-                onApprove: function(data, actions) {
-                    return actions.order.capture().then(function(details) {
-                        alert('Thank you for your donation of R' + donationAmount + '!');
-                        
-                        // Show the book link after successful payment
-                        document.querySelector('.book-link').style.display = 'block';
-                    });
-                }
-            }).render('#paypal-button-container');
-        }
-    });
+    renderGroceryList(); // Initial call to render the empty list
 </script>
 
 </body>
